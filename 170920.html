@@ -44,16 +44,7 @@ function main() {
     light.position.set(-1, 2, 4);
     scene.add(light);
   }
-  //
-   const boxWidth1 = 2.5;
-  const boxHeight1 = 2.5;
-  const boxDepth1 = 1.5;
-  const geometry1 = new THREE.BoxGeometry(boxWidth1, boxHeight1, boxDepth1);
-
-  const material1 = new THREE.MeshPhongMaterial({color: 0x11aaaa});  // greenish blue
-
-  const cube1 = new THREE.Mesh(geometry1, material1);
-  scene.add(cube1);
+ 
   //create cube
   const boxWidth = 2.5;
   const boxHeight = 2.5;
@@ -64,8 +55,18 @@ function main() {
 
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
- // more
-const boxWidth2 = 2.5;
+  //create cube1
+  const boxWidth1 = 2.5;
+  const boxHeight1 = 2.5;
+  const boxDepth1 = 1.5;
+  const geometry1 = new THREE.BoxGeometry(boxWidth1, boxHeight1, boxDepth1);
+
+  const material1 = new THREE.MeshPhongMaterial({color: 0x11aaaa});  // greenish blue
+
+  const cube1 = new THREE.Mesh(geometry1, material1);
+  scene.add(cube1);
+  // more
+  const boxWidth2 = 2.5;
   const boxHeight2 = 2.5;
   const boxDepth2 = 1.5;
   const geometry2 = new THREE.BoxGeometry(boxWidth2, boxHeight2, boxDepth2);
