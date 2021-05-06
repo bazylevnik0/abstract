@@ -1,0 +1,88 @@
+<html>
+<head>
+  <title>threejs - basic</title>
+  <style>
+    body
+    {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas
+    {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+  <script src="three.js"></script>
+  <script>
+    var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'),antialias: true});
+    renderer.setClearColor(0x000000);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    var camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 3000);
+
+    var scene = new THREE.Scene();
+
+    //light
+    var light = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(light);
+    var light1 = new THREE.PointLight(0xffffff, 0.5);
+    scene.add(light1);
+
+    //plane
+    const width = 9;  
+    const height = 9;  
+    const geometryPlane = new THREE.PlaneBufferGeometry(width, height);
+    var materialPlane = new THREE.MeshLambertMaterial({color: 0x4697f4});
+    var meshPlane = new THREE.Mesh(geometryPlane, materialPlane);
+    meshPlane.position.set(0, 0, -15);
+    scene.add(meshPlane);
+
+    //a
+    var geometryA = new THREE.RingBufferGeometry( 17, 6, 18 );
+    var materialA = new THREE.MeshBasicMaterial( { color: 0x0c2ff6, side: THREE.DoubleSide } );
+    var meshA = new THREE.Mesh( geometryA, materialA );
+
+    meshA.position.set(0, 0, -18);
+    scene.add( meshA );
+    
+    //b
+    const widthB = 5;  
+    const heightB = 10;  
+    const depthB = 6;  
+    const geometryB = new THREE.BoxBufferGeometry(widthB, heightB, depthB);
+    var materialB = new THREE.MeshBasicMaterial( { color: 0xd2fb60, side: THREE.DoubleSide } );
+    
+    var meshB = new THREE.Mesh( geometryB, materialB );
+
+    meshB.position.set(0, 0, -15);
+    scene.add( meshB );
+    
+    
+    //animation
+    requestAnimationFrame(render);
+
+    function render()
+    {
+      
+      meshA.rotation.z += 0.001;
+      meshA.rotation.x += 0.001;
+      meshA.rotation.y += -0.001;
+      meshB.rotation.z += 0.001;
+      meshB.rotation.x += -0.001;
+      meshB.rotation.y += 0.001;
+           
+      renderer.render(scene, camera);
+      requestAnimationFrame(render); 
+    }
+
+    renderer.render(scene, camera);
+  </script>
+</body>
+</html>
+
+
+

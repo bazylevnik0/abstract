@@ -1,0 +1,141 @@
+<html>
+<head>
+  <title>threejs - basic</title>
+  <style>
+    body
+    {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas
+    {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+  <script src="three.js"></script>
+  <script>
+    var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'),antialias: true});
+    renderer.setClearColor(0x000000);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    var camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 3000);
+
+    var scene = new THREE.Scene();
+
+    //light
+    var light = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(light);
+    var light1 = new THREE.PointLight(0xffffff, 0.5);
+    scene.add(light1);
+
+    //plane
+    const width = 12;  
+    const height = 12;  
+    const geometryPlane = new THREE.PlaneBufferGeometry(width, height);
+    var materialPlane = new THREE.MeshLambertMaterial({color: 0xcf1024});
+    var meshPlane = new THREE.Mesh(geometryPlane, materialPlane);
+    meshPlane.position.set(0, 0, -20);
+    scene.add(meshPlane);
+
+    //a
+    const outlineA = new THREE.Shape([
+  [ -2, -0.1], [  2, -0.1], [ 2,  0.6],
+  [1.6,  0.6], [1.6,  0.1], [-2,  0.1],
+].map(p => new THREE.Vector2(...p)));
+
+const xA = -2.5;
+const yA = -5;
+const shapeA = new THREE.CurvePath();
+const pointsA = [
+  [xA + 4.8, yA + 6.4],
+  [xA - 1.3, yA + 1.1],
+  [xA + 1.0, yA + 5.1],
+  [xA + 8.5, yA + 3.2],
+  [xA - 5.5, yA + 8.5],
+  [xA + 4.9, yA + 8.5],
+  [xA + 1.1, yA - 5.6],
+  [xA + 2.9, yA - 7.4]
+  
+].map(p => new THREE.Vector3(...p, 0));
+for (let i = 0; i < pointsA.length; i += 3) {
+  shapeA.add(new THREE.CubicBezierCurve3(...pointsA.slice(i, i + 4)));
+}
+
+const extrudeSettingsA = {
+  steps:  21,  
+
+  bevelEnabled: false,
+  extrudePath: shapeA,
+};
+
+const geometryA =  new THREE.ExtrudeBufferGeometry(outlineA, extrudeSettingsA);
+var materialA = new THREE.MeshLambertMaterial({color: 0x353f40});
+    var meshA = new THREE.Mesh(geometryA, materialA);
+    meshA.position.set(0, 0, -20);
+     meshA.rotation.z = 3.1;
+    scene.add(meshA);
+
+    //b
+    const outlineB = new THREE.Shape([
+  [ -2, -0.1], [  2, -0.1], [ 2,  0.6],
+  [1.6,  0.6], [1.6,  0.1], [-2,  0.1],
+].map(p => new THREE.Vector2(...p)));
+
+const xB = -2.5;
+const yB = -5;
+const shapeB = new THREE.CurvePath();
+const pointsB = [
+  [xB + 8.1, yB - 8.1],
+  [xB + 2.1, yB + 1.0],
+  [xB - 5.9, yB - 3.3],
+  [xB + 0.2, yB - 3.0],
+  [xB - 0.5, yB + 3.5],
+  [xB + 1.6, yB - 6.0],
+    
+].map(p => new THREE.Vector3(...p, 0));
+for (let i = 0; i < pointsB.length; i += 3) {
+  shapeB.add(new THREE.CubicBezierCurve3(...pointsB.slice(i, i + 4)));
+}
+
+const extrudeSettingsB = {
+  steps:  21,  
+
+  bevelEnabled: false,
+  extrudePath: shapeB,
+};
+
+const geometryB =  new THREE.ExtrudeBufferGeometry(outlineB, extrudeSettingsB);
+var materialB = new THREE.MeshLambertMaterial({color: 0x968f4f});
+    var meshB = new THREE.Mesh(geometryB, materialB);
+    meshB.position.set(0, 0, -20);
+    scene.add(meshB);
+
+
+
+    //animation
+    requestAnimationFrame(render);
+
+    function render()
+    {
+      
+      meshA.rotation.z += 0.001;
+      meshB.rotation.z += 0.001;
+      //meshA.rotation.x += 0.001;
+      //meshA.rotation.y += -0.001;
+      
+           
+      renderer.render(scene, camera);
+      requestAnimationFrame(render); 
+    }
+
+    renderer.render(scene, camera);
+  </script>
+</body>
+</html>
+
+
+
